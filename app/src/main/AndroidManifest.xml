@@ -43,24 +43,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainHomeActivity"
+        <activity
+            android:name=".ui.MainHomeActivity"
             android:configChanges="keyboardHidden|orientation|keyboard|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity android:name=".ui.commom.GuideActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.commom.GuideActivity"
             android:configChanges="keyboardHidden|orientation|keyboard|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.commom.LoginActivity"
-            android:label="@string/login"
             android:configChanges="keyboardHidden|orientation|keyboard|screenSize"
+            android:label="@string/login"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.commom.FindPwdActivity"
+            android:configChanges="keyboardHidden|orientation|keyboard|screenSize"
+            android:label="@string/login"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

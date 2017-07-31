@@ -110,6 +110,7 @@ public class BaseActivity extends AppCompatActivity {
         if (view != null) {
             if (isVisable) {
                 view.setVisibility(View.VISIBLE);
+                initActionBarOperate();
             } else {
                 view.setVisibility(View.GONE);
             }
@@ -121,6 +122,7 @@ public class BaseActivity extends AppCompatActivity {
         if (back != null) {
             if (isVisable) {
                 back.setVisibility(View.VISIBLE);
+                initActionBackBtn();
             } else {
                 back.setVisibility(View.GONE);
             }

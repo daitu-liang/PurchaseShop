@@ -9,7 +9,6 @@ import android.util.Log;
 import com.purchase.zhecainet.purchaseshop.app.PurchaseApplication;
 import com.purchase.zhecainet.purchaseshop.ui.MainHomeActivity;
 import com.purchase.zhecainet.purchaseshop.ui.commom.GuideActivity;
-import com.purchase.zhecainet.purchaseshop.ui.commom.LoginActivity;
 import com.purchase.zhecainet.purchaseshop.utils.Logger;
 import com.purchase.zhecainet.purchaseshop.utils.UserUtil;
 
@@ -34,7 +33,8 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(MainHomeActivity.getIntent(SplashActivity.this));
                         finish();
                     }else {
-                        startActivity(LoginActivity.getIntent(SplashActivity.this));
+//                        startActivity(LoginActivity.getIntent(SplashActivity.this));
+                        startActivity(MainHomeActivity.getIntent(SplashActivity.this));
                         finish();
                     }
                 }

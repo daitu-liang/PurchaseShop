@@ -3,6 +3,7 @@ package com.purchase.zhecainet.purchaseshop.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.purchase.zhecainet.purchaseshop.utils.PreferencesManager;
 
 /**
@@ -21,7 +22,7 @@ public class PurchaseApplication extends Application {
     }
     private void init() {
         preferenceManager = PreferencesManager.getInstance(this);
-
+        Fresco.initialize(this);
     }
     private static void setContext(Context mContext) {
         CONTEXT = mContext;

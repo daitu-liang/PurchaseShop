@@ -6,13 +6,17 @@
 
     <color name="white">#ffffff</color>
     <color name="milk_white">#F5F5F5</color>
-    <color name="milk_white_ex">#bbf5f5f5</color>
-    <color name="milk_bule_white">#9BF5F5F5</color>
     <color name="gray_devider_line">#eaf0f4</color>
-    <color name="hint_text">#c0c6cb</color>
+    <color name="gray_main_bg">#f2f3f7</color>
+
     <color name="register_bg_color">#F7F7F7</color>
     <color name="gray_background">#f4f4f4</color>
+    <color name="hint_text">#c0c6cb</color>
     <color name="gray_text">#b3bcbf</color>
+
     <color name="time_text">#8c98a1</color>
     <color name="text_dark">#141515</color>
+
+    <color name="btn_green_bg">#0a854c</color>
+    <color name="selectdeparment">#599cd5</color>
 </resources>
