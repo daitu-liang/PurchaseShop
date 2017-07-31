@@ -38,7 +38,12 @@ public class GoodsFragmentPagerAdapter extends FragmentPagerAdapter {
             GoodsCategory typeInfo = listType.get(position);
             Fragment fg = null;
             if (fg == null) {
-                fg = new GoodsListFragment();
+
+            }
+            if (position == 1||position == 0) {
+                fg = new GoodsListMultiFragment();
+            }else {
+                fg = new GoodsListSingleFragment();
             }
 
             Bundle bundle = new Bundle();

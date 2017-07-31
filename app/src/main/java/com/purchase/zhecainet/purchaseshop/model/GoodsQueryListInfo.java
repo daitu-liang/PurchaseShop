@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 邮箱：lxliang1101@163.com
  */
 
-public class GoodsListInfo implements Serializable {
+public class GoodsQueryListInfo implements Serializable {
     private  String id;
     private  String name;
 

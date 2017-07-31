@@ -38,6 +38,7 @@
                 fresco:retryImageScaleType="centerCrop"
                 fresco:roundWithOverlayColor="@null"
                 />
+
         </FrameLayout>
 
         <RelativeLayout
