@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#ffffff</color>
+    <color name="milk_white">#F5F5F5</color>
+    <color name="milk_white_ex">#bbf5f5f5</color>
+    <color name="milk_bule_white">#9BF5F5F5</color>
+    <color name="gray_devider_line">#eaf0f4</color>
+    <color name="hint_text">#c0c6cb</color>
+    <color name="register_bg_color">#F7F7F7</color>
+    <color name="gray_background">#f4f4f4</color>
+    <color name="gray_text">#b3bcbf</color>
+    <color name="time_text">#8c98a1</color>
+    <color name="text_dark">#141515</color>
+</resources>
