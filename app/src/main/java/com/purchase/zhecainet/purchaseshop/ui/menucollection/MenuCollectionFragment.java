@@ -15,6 +15,7 @@ import com.purchase.zhecainet.purchaseshop.R;
 import com.purchase.zhecainet.purchaseshop.base.BaseFragment;
 import com.purchase.zhecainet.purchaseshop.model.CollectionListInfo;
 import com.purchase.zhecainet.purchaseshop.utils.HeadUtils;
+import com.purchase.zhecainet.purchaseshop.widget.RatingBarView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -80,6 +81,20 @@ public class MenuCollectionFragment extends BaseFragment {
                 holder.setText(R.id.goods_desc_tv, "上次采购"+collectionInfo.getLast_number()+"份");
                 holder.setText(R.id.goods_price, "￥ "+collectionInfo.getPrice());
                 TagGroup mTagGroup =holder.getView(R.id.goods_tag_group);
+
+                RatingBarView ratingBarView=holder.getView(R.id.rb);
+                ratingBarView.setClickable(false);//设置可否点击
+                ratingBarView.setStar(2.5f);//设置显示的星星个数
+//                ratingBarView.setStepSize(RatingBar.StepSize.Half);//设置每次点击增加一颗星还是半颗星
+//                ratingBarView.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
+//                    @Override
+//                    public void onRatingChange(float ratingCount) {//点击星星变化后选中的个数
+//                        Log.d("RatingBar","RatingBar-Count="+ratingCount);
+//                    }
+//                });
+
+
+
                 mTagGroup.setTags(new String[]{"Tag1", "Tag2", "Tag3"});
 
                 holder.setOnClickListener(R.id.add_purchase, new View.OnClickListener() {

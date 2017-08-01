@@ -1,11 +1,17 @@
 package com.purchase.zhecainet.purchaseshop.ui.purchaseplan;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.purchase.zhecainet.purchaseshop.R;
 import com.purchase.zhecainet.purchaseshop.api.common.CommonApi;
 import com.purchase.zhecainet.purchaseshop.base.BaseFragment;
@@ -16,6 +22,9 @@ import com.purchase.zhecainet.purchaseshop.net.RetrofitClient;
 import com.purchase.zhecainet.purchaseshop.utils.HeadUtils;
 import com.purchase.zhecainet.purchaseshop.utils.Logger;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -28,10 +37,15 @@ import butterknife.ButterKnife;
  */
 
 public class PurchasePlanFragment extends BaseFragment {
-    private static final String TAG ="PurchasePlanFragment" ;
+    private static final String TAG = "PurchasePlanFragment";
+    @BindView(R.id.tv_deparmnent)
+    TextView tvDeparmnent;
+    @BindView(R.id.tv_month)
+    TextView tvMonth;
     private Logger log = Logger.getLogger(TAG);
-    @BindView(R.id.btn)
-    Button btn;
+    @BindView(R.id.calendarView)
+    MaterialCalendarView mCalendarView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,31 +56,60 @@ public class PurchasePlanFragment extends BaseFragment {
     }
 
     private void initView(View view) {
-        btn.setOnClickListener(new View.OnClickListener() {
+        tvDeparmnent.setText("卡卡西手机");
+        mCalendarView.state().edit()
+                .setFirstDayOfWeek(Calendar.MONDAY)
+                .setMinimumDate(CalendarDay.from(2016, 1, 1))
+                .setMaximumDate(CalendarDay.from(2018, 12, 12))
+                .setCalendarDisplayMode(CalendarMode.WEEKS)
+                .commit();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月");
+        String format = sdf.format(new Date());
+        tvMonth.setText(format);
+        
+        mCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onClick(View v) {
-                getPickGoodsData();
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
+                String format1 = sdf.format(date.getDate());
+                log.d("MainActivity", format1);
+                setCurrentMonth(date);
             }
         });
 
+        mCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
+            @Override
+            public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+                setCurrentMonth(date);
+            }
+        });
+    }
+
+    private void setCurrentMonth(CalendarDay date) {
     }
 
     private void getPickGoodsData() {
         Map<String, String> paramsmap = new LinkedHashMap<>();
-        paramsmap.put("version","1.0.0");
-        paramsmap.put("package","com.purchase.zhecainet.purchaseshop");
-        paramsmap.put("client_type","3");
-        String headVaule= HeadUtils.getAuthorization(paramsmap.toString());
+        paramsmap.put("version", "1.0.0");
+        paramsmap.put("package", "com.purchase.zhecainet.purchaseshop");
+        paramsmap.put("client_type", "3");
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
         RetrofitClient.getInstance()
                 .builder(CommonApi.class)
-                .getVersionInfo(headVaule,paramsmap)
+                .getVersionInfo(headVaule, paramsmap)
                 .compose(HttpTransformer.<VersionInfo>toTransformer())
                 .subscribe(new ApiSubscriber<VersionInfo>() {
                     @Override
                     protected void onSuccess(VersionInfo bean) {
-                        log.e(TAG,"bean="+bean.toString());
+                        log.e(TAG, "bean=" + bean.toString());
 
                     }
                 });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
     }
 }

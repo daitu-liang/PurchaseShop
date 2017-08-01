@@ -35,7 +35,7 @@
         android:imeOptions="actionSearch"
         android:textColor="@color/text_dark"
         android:textColorHint="@color/hint_text"
-        android:textSize="@dimen/text_size_16sp"
+        android:textSize="@dimen/text_size_14sp"
         android:gravity="center_vertical"
         />
 
