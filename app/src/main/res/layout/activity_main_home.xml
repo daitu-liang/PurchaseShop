@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.purchase.zhecainet.purchaseshop.ui.MainHomeActivity">
-    <include layout="@layout/title_bar_layout"></include>
+    <include layout="@layout/title_home_bar_layout"></include>
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"

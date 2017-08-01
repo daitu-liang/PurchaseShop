@@ -94,6 +94,7 @@ public class GoodsListMultiFragment extends BaseFragment implements GoodsAdpater
     @Override
     public void OnItemListClickListener(int position) {
 
+
     }
 
     private void getPickGoodsData() {

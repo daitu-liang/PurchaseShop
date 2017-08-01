@@ -1,14 +1,17 @@
 package com.purchase.zhecainet.purchaseshop.ui.pickgoods;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.purchase.zhecainet.purchaseshop.R;
 import com.purchase.zhecainet.purchaseshop.model.GoodsSaleListInfo;
 
@@ -52,8 +55,13 @@ public class GoodsAdpater extends RecyclerView.Adapter<GoodsAdpater.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.mTitileTv.setText(list.get(position).getName());
-        holder.mTitileTv.setOnClickListener(new View.OnClickListener() {
+        String url=list.get(position).getPhoto();
+        if(!TextUtils.isEmpty(url)){
+            Uri uri = Uri.parse(url);
+            holder.goodsImage.setImageURI(uri);
+        }
+
+        holder.addPurchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(listener!=null){
@@ -117,9 +125,10 @@ public class GoodsAdpater extends RecyclerView.Adapter<GoodsAdpater.ViewHolder> 
         }
     }
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title_tv)
-        TextView mTitileTv;
-
+        @BindView(R.id.goods_image)
+        SimpleDraweeView goodsImage;
+        @BindView(R.id.add_purchase)
+        ImageButton addPurchase;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

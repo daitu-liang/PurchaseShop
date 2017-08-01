@@ -3,13 +3,13 @@ package com.purchase.zhecainet.purchaseshop.model;
 import java.io.Serializable;
 
 /**
- * 在售商品列表查询
- * Created by leixiaoliang on 2017/7/28.
+ * Created by leixiaoliang on 2017/7/26.
  * 邮箱：lxliang1101@163.com
  */
 
-public class GoodsSaleListInfo implements Serializable {
+public class CollectionListInfo implements Serializable {
     private String id;
+    private String goods_sale_id;
     private String trace_code;
     private String name;
     private String goods_id;
@@ -19,7 +19,26 @@ public class GoodsSaleListInfo implements Serializable {
     private String weight;
     private String price;
     private String point;
+    private String last_number;
 
+    public String getGoods_sale_id() {
+        return goods_sale_id;
+    }
+
+    public void setGoods_sale_id(String goods_sale_id) {
+        this.goods_sale_id = goods_sale_id;
+    }
+
+    public String getLast_number() {
+        return last_number;
+    }
+
+    public void setLast_number(String last_number) {
+        this.last_number = last_number;
+    }
+
+    private ComConent com_content;
+    private SupplierContent supplier_content;
     public String getId() {
         return id;
     }
@@ -107,10 +126,6 @@ public class GoodsSaleListInfo implements Serializable {
     public void setSupplier_content(SupplierContent supplier_content) {
         this.supplier_content = supplier_content;
     }
-
-    private ComConent com_content;
-    private SupplierContent supplier_content;
-
 
 
 
