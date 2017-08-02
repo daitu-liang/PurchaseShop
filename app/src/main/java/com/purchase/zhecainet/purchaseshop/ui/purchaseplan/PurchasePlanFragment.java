@@ -66,26 +66,36 @@ public class PurchasePlanFragment extends BaseFragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月");
         String format = sdf.format(new Date());
         tvMonth.setText(format);
-        
+
         mCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
-                String format1 = sdf.format(date.getDate());
-                log.d("MainActivity", format1);
-                setCurrentMonth(date);
+                String formatDate = getDateMYD(date);
+                log.d("", "onDateSelected-formatDate=" + formatDate);
+                setCurrentMonth(formatDate);
             }
         });
 
         mCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
-                setCurrentMonth(date);
+                String formatDate = getDateMYD(date);
+                log.d("", "setOnMonthChangedListener=" + date + "");
+                log.d("", "setOnMonthChangedListener-formatDate=" + formatDate);
+                setCurrentMonth(formatDate);
+
             }
         });
     }
 
-    private void setCurrentMonth(CalendarDay date) {
+
+    private void setCurrentMonth(String date) {
+        tvMonth.setText(date);
+    }
+
+    private String getDateMYD(@NonNull CalendarDay date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
+        return sdf.format(date.getDate());
     }
 
     private void getPickGoodsData() {

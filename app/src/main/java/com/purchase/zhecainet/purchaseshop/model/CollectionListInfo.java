@@ -18,7 +18,7 @@ public class CollectionListInfo implements Serializable {
 
     private String weight;
     private String price;
-    private String point;
+    private float point;
     private String last_number;
 
     public String getGoods_sale_id() {
@@ -103,11 +103,11 @@ public class CollectionListInfo implements Serializable {
         this.price = price;
     }
 
-    public String getPoint() {
+    public float getPoint() {
         return point;
     }
 
-    public void setPoint(String point) {
+    public void setPoint(float point) {
         this.point = point;
     }
 

@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.purchase.zhecainet.purchaseshop.R;
@@ -52,7 +52,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.login_button);
+        ImageButton mEmailSignInButton = (ImageButton) findViewById(R.id.login_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

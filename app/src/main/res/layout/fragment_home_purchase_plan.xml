@@ -32,15 +32,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#E9ECF1"
+        android:background="@color/calander_bg"
         android:padding="10dp">
-
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E9ECF1"
-            app:mcv_selectionColor="#1F8CCA"
+            app:mcv_selectionColor="@color/calander_select_bg"
             app:mcv_showOtherDates="all" />
     </LinearLayout>
 </LinearLayout>

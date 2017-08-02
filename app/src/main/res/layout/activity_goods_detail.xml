@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    tools:context="com.purchase.zhecainet.purchaseshop.ui.commom.GoodsDetailActivity">
+
+    <include layout="@layout/title_bar_layout" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_main_bg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/goods_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_gravity="center_vertical"
+                    fresco:actualImageScaleType="centerCrop"
+                    fresco:fadeDuration="300"
+                    fresco:failureImage="@drawable/ic_fail_pic"
+                    fresco:failureImageScaleType="centerInside"
+                    fresco:placeholderImageScaleType="fitCenter"
+                    fresco:progressBarImage="@drawable/ic_image_loading"
+                    fresco:progressBarImageScaleType="centerInside"
+                    fresco:retryImageScaleType="centerCrop" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:padding="@dimen/activity_horizontal_margin">
+
+                    <RatingBar
+                        android:id="@+id/indicator_ratingbar"
+                        style="?android:attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:numStars="5"
+                        android:rating="2.5"
+                        android:scaleX="0.6"
+                        android:scaleY="0.6"
+                        android:visibility="gone" />
+
+                    <com.purchase.zhecainet.purchaseshop.widget.RatingBarView
+                        android:id="@+id/rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="5dp"
+                        app:starCount="5"
+                        app:starEmpty="@drawable/ic_star_grey"
+                        app:starFill="@drawable/ic_star_yellow"
+                        app:starHalf="@drawable/ic_star_yellow"
+                        app:starImageSize="14dp"
+                        app:starPadding="3dp"
+                        app:starStep="1.5"
+                        app:stepSize="Half" />
+
+                    <TextView
+                        android:id="@+id/goods_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/rb"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="牛肉"
+                        android:textColor="@color/text_dark"
+                        android:textSize="@dimen/text_size_16sp" />
+
+                    <TextView
+                        android:id="@+id/goods_num_weight_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/goods_name_tv"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="dd"
+                        android:textColor="@color/text_dark"
+                        android:textSize="@dimen/text_size_14sp" />
+
+                    <TextView
+                        android:id="@+id/goods_desc_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/goods_num_weight_tv"
+                        android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="dddd"
+                        android:textColor="@color/gray_text"
+                        android:textSize="@dimen/text_size_12sp" />
+
+                    <me.gujun.android.taggroup.TagGroup
+                        android:id="@+id/goods_tag_group"
+                        style="@style/TagGroup"
+                        android:layout_below="@id/goods_desc_tv"
+                        android:layout_marginTop="5dp"
+                        android:focusable="false"
+                        app:atg_backgroundColor="@color/select_tag2"
+                        app:atg_borderColor="@color/transparent"
+                        app:atg_textColor="@color/milk_white" />
+
+                    <TextView
+                        android:id="@+id/goods_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/indicator_ratingbar"
+                        android:text="￥ 308.00"
+                        android:textColor="@color/text_dark"
+                        android:textSize="@dimen/text_size_18sp" />
+
+                    <ImageButton
+                        android:id="@+id/add_collection_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/goods_desc_tv"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/ic_collection" />
+
+                </RelativeLayout>
+
+                <WebView
+                    android:id="@+id/webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"></WebView>
+            </LinearLayout>
+        </ScrollView>
+
+
+        <RelativeLayout
+            android:id="@+id/add_purchase_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/btn_margin_bottom_high"
+            android:background="@drawable/ic_subimt"
+            android:onClick="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_add_pucharse"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:id="@+id/tip_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_puchase"
+                    android:textColor="@color/milk_white"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:layout_marginTop="2dp"/>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </FrameLayout>
+</LinearLayout>

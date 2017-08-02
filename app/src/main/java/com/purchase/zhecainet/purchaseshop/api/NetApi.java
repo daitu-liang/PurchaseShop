@@ -53,18 +53,18 @@ public class NetApi {
      * **************采购计划 接口**************************
      */
     //采购单查询
-    public static final String getPurchaseOrderQuery="user/{user_id}/collaborator/{collaborator_id}/purchase_order";
+    public static final String getPurchaseOrderQuery="user/{user_id}/Collaborator/{collaborator_id}/purchase_order";
     //⽤户采购单下单时调⽤
     public static final String getPurchaseOrderaAdd="user/{user_id}/collaborator/{collaborator_id}/purchase_order";
     //采购单修改
-    public static final String getPurchaseOrderModify="user/{user_id}/collaborator/{collaborator_id}/purchase_order/\n" +
+    public static final String getPurchaseOrderModify="user/{user_id}/Collaborator/{collaborator_id}/purchase_order/\n" +
             "{purchase_order_id}";
     // ⽤户采购单确认收货时
-    public static final String getPurchaseOrderConfirmReceipt="user/{user_id}/collaborator/{collaborator_id}/purchase_order/{purchase_order_id}";
+    public static final String getPurchaseOrderConfirmReceipt="user/{user_id}/Collaborator/{collaborator_id}/purchase_order/{purchase_order_id}";
     //添加采购收藏
     public static final String getPurchaseTemplateAdd="user/{user_id}/collaborator/{collaborator_id}/purchase_template";
     //采购收藏列表查询
-    public static final String getPurchaseTemplateQuery="user/{user_id}/collaborator/{collaborator_id}/purchase_template";
+    public static final String getPurchaseTemplateQuery="user/{user_id}/Collaborator/{collaborator_id}/purchase_template";
 
 
 

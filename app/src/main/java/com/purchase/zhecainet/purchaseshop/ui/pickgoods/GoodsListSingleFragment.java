@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.purchase.zhecainet.purchaseshop.R;
 import com.purchase.zhecainet.purchaseshop.base.BaseFragment;
 import com.purchase.zhecainet.purchaseshop.model.GoodsSaleListInfo;
+import com.purchase.zhecainet.purchaseshop.ui.commom.GoodsDetailActivity;
 import com.purchase.zhecainet.purchaseshop.utils.HeadUtils;
 import com.purchase.zhecainet.purchaseshop.utils.Logger;
 import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.ArrayList;
@@ -70,7 +73,7 @@ public class GoodsListSingleFragment extends BaseFragment  {
                 ratingbar.setNumStars(5);
                 ratingbar.setRating(3.5F);
                 holder.setText(R.id.goods_name_tv, saleListInfo.getName());
-                holder.setText(R.id.goods_num_weight_tv, saleListInfo.getWeight()+"KG");
+                holder.setText(R.id.goods_num_weight_tv, saleListInfo.getWeight()+"/KG");
 //                holder.setText(R.id.goods_desc_tv, collectionInfo.getSupplier_content().getProducer()+"");
                 holder.setText(R.id.goods_desc_tv, "来自上海滩");
                 holder.setText(R.id.goods_price, "￥ "+saleListInfo.getPrice());
@@ -108,7 +111,7 @@ public class GoodsListSingleFragment extends BaseFragment  {
             GoodsSaleListInfo info=new GoodsSaleListInfo();
             info.setName("西班牙牛排"+i);
             info.setPhoto("http://t.img.i.hsuperior.com/80a388ed-93f5-44a0-8aa7-e65f0f8809f2");
-            info.setPoint("3");
+            info.setPoint(2.0f);
             info.setWeight("54");
             info.setPrice("845.0");
             mListData.add(info);
@@ -118,7 +121,17 @@ public class GoodsListSingleFragment extends BaseFragment  {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                startActivity(GoodsDetailActivity.getIntent(getActivity(),null));
+            }
 
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
     }
 
     @Override

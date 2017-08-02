@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.purchase.zhecainet.purchaseshop.R;
 import com.purchase.zhecainet.purchaseshop.base.BaseFragment;
 import com.purchase.zhecainet.purchaseshop.model.CollectionListInfo;
+import com.purchase.zhecainet.purchaseshop.ui.commom.GoodsDetailActivity;
 import com.purchase.zhecainet.purchaseshop.utils.HeadUtils;
 import com.purchase.zhecainet.purchaseshop.widget.RatingBarView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.ArrayList;
@@ -81,7 +84,7 @@ public class MenuCollectionFragment extends BaseFragment {
                 holder.setText(R.id.goods_desc_tv, "上次采购"+collectionInfo.getLast_number()+"份");
                 holder.setText(R.id.goods_price, "￥ "+collectionInfo.getPrice());
                 TagGroup mTagGroup =holder.getView(R.id.goods_tag_group);
-
+                mTagGroup.setTags(new String[]{"Tag1", "Tag2", "Tag3"});
                 RatingBarView ratingBarView=holder.getView(R.id.rb);
                 ratingBarView.setClickable(false);//设置可否点击
                 ratingBarView.setStar(2.5f);//设置显示的星星个数
@@ -95,7 +98,7 @@ public class MenuCollectionFragment extends BaseFragment {
 
 
 
-                mTagGroup.setTags(new String[]{"Tag1", "Tag2", "Tag3"});
+
 
                 holder.setOnClickListener(R.id.add_purchase, new View.OnClickListener() {
                     @Override
@@ -121,13 +124,13 @@ public class MenuCollectionFragment extends BaseFragment {
 
     }
     private void initData() {
-
         for(int i=0;i<50;i++){
             CollectionListInfo info=new CollectionListInfo();
             info.setName("渴了鸡排"+i);
             info.setPhoto("http://t.img.i.hsuperior.com/80a388ed-93f5-44a0-8aa7-e65f0f8809f2");
             info.setLast_number("7");
             info.setPrice("487.0");
+            info.setPoint(3.0f);
             mListData.add(info);
         }
     }
@@ -135,7 +138,17 @@ public class MenuCollectionFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                startActivity(GoodsDetailActivity.getIntent(getActivity(),null));
+            }
 
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
     }
 
     @Override

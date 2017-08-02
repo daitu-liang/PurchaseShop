@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingBottom="4dp">
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/goods_image"
+        android:layout_width="@dimen/pic_goods_with"
+        android:layout_height="@dimen/pic_goods_high"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10dp"
+        fresco:actualImageScaleType="centerCrop"
+        fresco:fadeDuration="300"
+        fresco:failureImage="@drawable/ic_fail_pic"
+        fresco:failureImageScaleType="centerInside"
+        fresco:placeholderImageScaleType="fitCenter"
+        fresco:progressBarImage="@drawable/ic_image_loading"
+        fresco:progressBarImageScaleType="centerInside"
+        fresco:retryImageScaleType="centerCrop"
+        fresco:roundWithOverlayColor="@null" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/goods_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="牛肉"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <TextView
+            android:id="@+id/goods_num_weight_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/goods_name_tv"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="dd"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <TextView
+            android:id="@+id/goods_desc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/goods_num_weight_tv"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="dddd"
+            android:textColor="@color/gray_text"
+            android:textSize="@dimen/text_size_12sp" />
+
+        <me.gujun.android.taggroup.TagGroup
+            android:id="@+id/goods_tag_group"
+            style="@style/TagGroup"
+            android:layout_below="@id/goods_desc_tv"
+            android:layout_marginTop="5dp"
+            android:focusable="false"
+            android:visibility="gone"
+            app:atg_backgroundColor="@color/select_tag2"
+            app:atg_borderColor="@color/transparent"
+            app:atg_textColor="@color/milk_white"
+            />
+
+        <TextView
+            android:id="@+id/goods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/indicator_ratingbar"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="￥ 308.00"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/text_size_18sp" />
+
+
+        <TextView
+            android:id="@+id/tv_empty_goods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/goods_desc_tv"
+            android:background="@drawable/ic_empty_goods"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="缺货0"
+            android:textColor="@color/tip_bg_red"
+            android:textSize="@dimen/text_size_12sp"
+            />
+    </RelativeLayout>
+</LinearLayout>

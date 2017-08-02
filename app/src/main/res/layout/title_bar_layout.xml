@@ -38,7 +38,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text=""
-            android:textColor="@color/milk_white"
+            android:textColor="@color/title_dark"
             android:textSize="@dimen/text_size_20sp" />
     </RelativeLayout>
 </merge>

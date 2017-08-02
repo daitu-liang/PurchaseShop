@@ -19,7 +19,7 @@ public class UserUtil {
 
 	public static String getUid() {
 		if (hasLogin()) {
-			return userInfo.getU_guid();
+			return userInfo.getUser_id();
 		}
 		return null;
 	}
@@ -34,9 +34,9 @@ public class UserUtil {
 			log.i("RGBH","hasLogin-userInfo="+userInfo);
 			initUserInfo();
 		}
-		boolean is = (null != userInfo) && !(TextUtils.isEmpty(userInfo.getU_guid()));
+		boolean is = (null != userInfo) && !(TextUtils.isEmpty(userInfo.getUser_id()));
 		log.i("RGBH","用户是否登录成功="+is);
-		return (null != userInfo && !TextUtils.isEmpty(userInfo.getU_guid()));
+		return (null != userInfo && !TextUtils.isEmpty(userInfo.getUser_id()));
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class UserUtil {
 	 */
 	public static void saveUserInfo() {
 		try {
-			log.i("RGBH","保存用户数据getU_guid="+userInfo.getU_guid());
+			log.i("RGBH","保存用户数据getU_guid="+userInfo.getUser_id());
 			String userJson = new Gson().toJson(userInfo);
 			FileUtil.writeFile(PurchaseApplication.CONTEXT,
 					Constant.FileName.USER_INFO, userJson);
@@ -65,7 +65,7 @@ public class UserUtil {
 				if(userInfo==null){
 					userInfo=new UserInfo();
 				}
-			UserUtil.userInfo.setU_guid(data.getU_guid());
+			UserUtil.userInfo.setUser_id(data.getU_guid());
 
 
 		} catch (Exception e) {

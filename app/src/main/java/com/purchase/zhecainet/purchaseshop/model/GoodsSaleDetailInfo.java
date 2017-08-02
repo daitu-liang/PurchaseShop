@@ -18,138 +18,12 @@ public class GoodsSaleDetailInfo implements Serializable {
 
     private  String weight;
     private  String price;
-    private  String point;
-
-
+    private  float point;
 
     private  ComConent com_content;
     private  SupplierContent supplier_content;
     private Attachm attachm;
-    class ComConent{
-        private  String brief;
-        private String content;
 
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getBrief() {
-            return brief;
-        }
-
-        public void setBrief(String brief) {
-            this.brief = brief;
-        }
-    }
-
-    class  SupplierContent{
-        private  String supplier_id;
-        private  String supplier_name;//供应商名称
-        private  String producer;//商品来源地
-        private  String tags;//多个标签用逗号“，”分隔
-        private  String advantage;
-        private  String content;
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getSupplier_id() {
-            return supplier_id;
-        }
-
-        public void setSupplier_id(String supplier_id) {
-            this.supplier_id = supplier_id;
-        }
-
-        public String getSupplier_name() {
-            return supplier_name;
-        }
-
-        public void setSupplier_name(String supplier_name) {
-            this.supplier_name = supplier_name;
-        }
-
-        public String getProducer() {
-            return producer;
-        }
-
-        public void setProducer(String producer) {
-            this.producer = producer;
-        }
-
-        public String getTags() {
-            return tags;
-        }
-
-        public void setTags(String tags) {
-            this.tags = tags;
-        }
-
-        public String getAdvantage() {
-            return advantage;
-        }
-
-        public void setAdvantage(String advantage) {
-            this.advantage = advantage;
-        }
-    }
-    class Attachm{
-        private  String id;
-        private String type;
-        private String url;
-        private String module_id;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getModule_id() {
-            return module_id;
-        }
-
-        public void setModule_id(String module_id) {
-            this.module_id = module_id;
-        }
-
-        public String getObject_id() {
-            return object_id;
-        }
-
-        public void setObject_id(String object_id) {
-            this.object_id = object_id;
-        }
-
-        private String object_id;
-    }
 
     public String getId() {
         return id;
@@ -215,11 +89,11 @@ public class GoodsSaleDetailInfo implements Serializable {
         this.price = price;
     }
 
-    public String getPoint() {
+    public float getPoint() {
         return point;
     }
 
-    public void setPoint(String point) {
+    public void setPoint(float point) {
         this.point = point;
     }
 

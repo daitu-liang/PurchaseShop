@@ -13,6 +13,15 @@ public  class SupplierContent implements Serializable {
     private String producer;
     private String tags;//多个标签用逗号“，”分隔
     private String advantage;
+    private String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public String getSupplier_id() {
         return supplier_id;

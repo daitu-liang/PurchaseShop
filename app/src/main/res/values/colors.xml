@@ -11,18 +11,22 @@
     <color name="gray_devider_line">#eaf0f4</color>
     <color name="gray_main_bg">#f2f3f7</color>
 
+    <color name="calander_bg">#e8ebf0</color>
+    <color name="calander_select_bg">#218ecb</color>
+
     <color name="register_bg_color">#F7F7F7</color>
     <color name="gray_background">#f4f4f4</color>
     <color name="hint_text">#c0c6cb</color>
     <color name="gray_text">#b3bcbf</color>
 
+    <color name="line_gray">#b3bcbf</color>
     <color name="time_text">#8c98a1</color>
-    <color name="text_dark">#141515</color>
-
+    <color name="text_dark">#c8232525</color>
+    <color name="title_dark">#c82b2d2d</color>
     <color name="btn_green_bg">#0a854c</color>
     <color name="selectdeparment">#599cd5</color>
 
     <color name="select_tag1">#91c686</color>
     <color name="select_tag2">#e8a081</color>
-
+    <color name="tip_bg_red">#fb958e</color>
 </resources>

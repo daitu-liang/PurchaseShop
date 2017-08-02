@@ -18,7 +18,7 @@ public class GoodsSaleListInfo implements Serializable {
 
     private String weight;
     private String price;
-    private String point;
+    private float point;
 
     public String getId() {
         return id;
@@ -84,11 +84,11 @@ public class GoodsSaleListInfo implements Serializable {
         this.price = price;
     }
 
-    public String getPoint() {
+    public float getPoint() {
         return point;
     }
 
-    public void setPoint(String point) {
+    public void setPoint(float point) {
         this.point = point;
     }
 

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.purchase.zhecainet.purchaseshop.R;
 import com.purchase.zhecainet.purchaseshop.base.BaseActivity;
@@ -42,7 +43,7 @@ public class FindPwdActivity extends BaseActivity {
     @BindView(R.id.regist_getcode_btn)
     Button getCodeButn;
     @BindView(R.id.subimt_button)
-    Button subimtButton;
+    RelativeLayout subimtButton;
     private static final int MSG_CACULATE_TIME = 1;
     private boolean isCodeCDTime = true;
 
