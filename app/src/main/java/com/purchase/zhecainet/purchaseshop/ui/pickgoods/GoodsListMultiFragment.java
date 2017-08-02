@@ -17,6 +17,7 @@ import com.purchase.zhecainet.purchaseshop.model.SmsInfo;
 import com.purchase.zhecainet.purchaseshop.net.ApiSubscriber;
 import com.purchase.zhecainet.purchaseshop.net.HttpTransformer;
 import com.purchase.zhecainet.purchaseshop.net.RetrofitClient;
+import com.purchase.zhecainet.purchaseshop.ui.commom.GoodsDetailActivity;
 import com.purchase.zhecainet.purchaseshop.utils.HeadUtils;
 import com.purchase.zhecainet.purchaseshop.utils.Logger;
 
@@ -93,8 +94,12 @@ public class GoodsListMultiFragment extends BaseFragment implements GoodsAdpater
 
     @Override
     public void OnItemListClickListener(int position) {
+        startActivity(GoodsDetailActivity.getIntent(getActivity(), null));
+    }
 
-
+    @Override
+    public void OnItemAddClickListener(int position) {
+        showToast("加入采购");
     }
 
     private void getPickGoodsData() {
