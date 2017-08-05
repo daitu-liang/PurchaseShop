@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +21,18 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.purchase.zhecainet.purchaseshop.R;
-import com.purchase.zhecainet.purchaseshop.api.common.CommonApi;
+import com.purchase.zhecainet.purchaseshop.api.pickgoods.PickGoodsApi;
 import com.purchase.zhecainet.purchaseshop.base.BaseFragment;
 import com.purchase.zhecainet.purchaseshop.model.GoodsCategory;
-import com.purchase.zhecainet.purchaseshop.model.GoodsQueryListInfo;
-import com.purchase.zhecainet.purchaseshop.model.SmsInfo;
+import com.purchase.zhecainet.purchaseshop.model.GoodsQuerySearchListInfo;
+import com.purchase.zhecainet.purchaseshop.model.GoodsSaleListInfo;
 import com.purchase.zhecainet.purchaseshop.net.ApiSubscriber;
 import com.purchase.zhecainet.purchaseshop.net.HttpTransformer;
 import com.purchase.zhecainet.purchaseshop.net.RetrofitClient;
 import com.purchase.zhecainet.purchaseshop.utils.HeadUtils;
+import com.purchase.zhecainet.purchaseshop.utils.ListUtil;
 import com.purchase.zhecainet.purchaseshop.utils.Logger;
+import com.purchase.zhecainet.purchaseshop.utils.UserUtil;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -61,9 +64,10 @@ public class PickGoodsFragment extends BaseFragment {
     private GoodsFragmentPagerAdapter myFragmentPagerAdapter;
     private Unbinder bind;
     List<GoodsCategory> categoryList = new ArrayList<>();
-    List<GoodsQueryListInfo> categorySearchList = new ArrayList<>();
+    List<GoodsQuerySearchListInfo> categorySearchList = new ArrayList<>();
     private View searchView;
     private PopupWindow mPopupView;
+    private CommonAdapter<GoodsQuerySearchListInfo> mSearchAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,13 +80,13 @@ public class PickGoodsFragment extends BaseFragment {
 
     private void initView(View view) {
 
+        getGoodsCategoryData();
         intData();
-        myFragmentPagerAdapter = new GoodsFragmentPagerAdapter(getActivity().getSupportFragmentManager(), categoryList);
+        myFragmentPagerAdapter = new GoodsFragmentPagerAdapter(getChildFragmentManager(), categoryList);
         mViewPager.setAdapter(myFragmentPagerAdapter);
         //将TabLayout与ViewPager绑定在一起
         mTabLayout.setupWithViewPager(mViewPager);
         setupTabIcons();
-
         goodsSearchEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +96,11 @@ public class PickGoodsFragment extends BaseFragment {
 
     }
 
+
+
+    /**
+     * 搜索
+     */
     private void showSearchPop() {
 
         if (mPopupView == null) {
@@ -103,7 +112,6 @@ public class PickGoodsFragment extends BaseFragment {
             mPopupView.setFocusable(true);
             mPopupView.setOutsideTouchable(true);
 //        //相对于父控件的位置（例如正中央Gravity.CENTER，下方Gravity.BOTTOM等），可以设置偏移或无偏移
-
             //实例化一个ColorDrawable颜色为半透明
             ColorDrawable dw = new ColorDrawable(0x00000000);
             //设置SelectPicPopupWindow弹出窗体的背景
@@ -137,13 +145,15 @@ public class PickGoodsFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                searchDataByKey(s.toString());
 
             }
+
         });
 
-        CommonAdapter mAdapter = new CommonAdapter<GoodsQueryListInfo>(getActivity(), R.layout.item_search, categorySearchList) {
+         mSearchAdapter = new CommonAdapter<GoodsQuerySearchListInfo>(getActivity(), R.layout.item_search, categorySearchList) {
             @Override
-            protected void convert(ViewHolder holder, GoodsQueryListInfo goodsQueryListInfo, int position) {
+            protected void convert(ViewHolder holder, GoodsQuerySearchListInfo goodsQueryListInfo, int position) {
                 holder.setText(R.id.section_labe_tv, goodsQueryListInfo.getName());
 
                 if (getcheckItemPosition() != -1) {
@@ -167,12 +177,15 @@ public class PickGoodsFragment extends BaseFragment {
             }
 
         };
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+        mRecyclerView.setAdapter(mSearchAdapter);
+        mSearchAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 String goodsId = categorySearchList.get(position).getId();
-//                mPopupView.dismiss();
+                String goodsName = categorySearchList.get(position).getName();
+                getPickGoodsListData(goodsId,goodsName);
+                mPopupView.dismiss();
+
             }
 
             @Override
@@ -189,11 +202,87 @@ public class PickGoodsFragment extends BaseFragment {
             }
         });
     }
+    /**
+     * 获取商品分类
+     */
+    private void getGoodsCategoryData() {
 
+        Map<String, String> paramsmap = new LinkedHashMap<>();
+//        paramsmap.put("account", phone);
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
+        String userId= UserUtil.getUid();
+        if(TextUtils.isEmpty(userId))return;
+        RetrofitClient.getInstance()
+                .builder(PickGoodsApi.class)
+                .getGoodsCategoryQuery(headVaule)
+                .compose(HttpTransformer.<List<GoodsCategory>>toTransformer())
+                .subscribe(new ApiSubscriber<List<GoodsCategory>>() {
+                    @Override
+                    protected void onSuccess(List<GoodsCategory> bean) {
+                        if(categoryList!=null){
+                            categoryList.addAll(bean);
+                            myFragmentPagerAdapter.setListType(categoryList);
+                            setupTabIcons();
+                            myFragmentPagerAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+    /**
+     * 调搜索
+     * @param keyValue
+     */
+    private void searchDataByKey(String keyValue) {
+        if(TextUtils.isEmpty(keyValue))return;
+        String userId = UserUtil.getUid();
+        if(TextUtils.isEmpty(userId))return;
+        Map<String, String> paramsmap = new LinkedHashMap<>();
+        paramsmap.put("keyword", keyValue);
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
+        RetrofitClient.getInstance()
+                .builder(PickGoodsApi.class)
+                .getGoodsListSearchQuery(headVaule,userId,paramsmap)
+                .compose(HttpTransformer.<List<GoodsQuerySearchListInfo>>toTransformer())
+                .subscribe(new ApiSubscriber<List<GoodsQuerySearchListInfo>>() {
+                    @Override
+                    protected void onSuccess(List<GoodsQuerySearchListInfo> bean) {
 
+                        if(ListUtil.isEmpty(bean)){
+                            categorySearchList.addAll(bean);
+                            mSearchAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 获取商品列表数据
+     * @param goodsId
+     * @param goodsName
+     */
+    private void getPickGoodsListData(String goodsId, String goodsName) {
+        String userId= UserUtil.getUid();
+        if(TextUtils.isEmpty(userId))return;
+        Map<String, String> paramsmap = new LinkedHashMap<>();
+        paramsmap.put("category_id", goodsId);
+        paramsmap.put("keyword", goodsName);
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
+        RetrofitClient.getInstance()
+                .builder(PickGoodsApi.class)
+                .getGoodsSaleListQuery(headVaule,userId,paramsmap)
+                .compose(HttpTransformer.<List<GoodsSaleListInfo>>toTransformer())
+                .subscribe(new ApiSubscriber<List<GoodsSaleListInfo>>() {
+                    @Override
+                    protected void onSuccess(List<GoodsSaleListInfo> bean) {
+                        if(!ListUtil.isEmpty(bean)){
+
+                        }
+                    }
+                });
+    }
     private void intData() {
         for (int i = 0; i < 15; i++) {
-            GoodsQueryListInfo categoryInfo = new GoodsQueryListInfo();
+            GoodsQuerySearchListInfo categoryInfo = new GoodsQuerySearchListInfo();
             categoryInfo.setName("西红柿" + i);
             categoryInfo.setId(i + "");
             categorySearchList.add(categoryInfo);
@@ -207,8 +296,11 @@ public class PickGoodsFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 初始化tab数据
+     */
     private void setupTabIcons() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < categoryList.size(); i++) {
             mTabLayout.getTabAt(i).setCustomView(getTabView(i));
         }
     }
@@ -217,29 +309,13 @@ public class PickGoodsFragment extends BaseFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_tab, null);
         TextView txt_title = (TextView) view.findViewById(R.id.txt_title);
         txt_title.setText(categoryList.get(position).getName());
-        Uri uri = Uri.parse("http://t.img.i.hsuperior.com/80a388ed-93f5-44a0-8aa7-e65f0f8809f2");
+        Uri uri = Uri.parse(categoryList.get(position).getIcon());
         SimpleDraweeView draweeView = (SimpleDraweeView) view.findViewById(R.id.title_image_view);
         draweeView.setImageURI(uri);
         return view;
     }
 
-    private void getPickGoodsData() {
-        String phone = "18593276078";
-        Map<String, String> paramsmap = new LinkedHashMap<>();
-        paramsmap.put("phone", phone);
-        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
-        RetrofitClient.getInstance()
-                .builder(CommonApi.class)
-                .getBasicSms(headVaule, paramsmap)
-                .compose(HttpTransformer.<SmsInfo>toTransformer())
-                .subscribe(new ApiSubscriber<SmsInfo>() {
-                    @Override
-                    protected void onSuccess(SmsInfo bean) {
-                        log.e(TAG, "bean=" + bean.getTran_id());
 
-                    }
-                });
-    }
 
     /**
      * 设置添加屏幕的背景透明度
@@ -261,8 +337,12 @@ public class PickGoodsFragment extends BaseFragment {
         }
         if (categoryList != null) {
             categoryList.clear();
+            categoryList=null;
         }
-
+        if(categorySearchList!=null){
+            categorySearchList.clear();
+            categorySearchList=null;
+        }
 
     }
 }
