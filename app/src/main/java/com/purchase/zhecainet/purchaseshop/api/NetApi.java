@@ -42,7 +42,7 @@ public class NetApi {
     //查询商品分类信息
     public static final String getGoodsCategoryQuery="goods/category";
     //商品库备选商品快速查询
-    public static final String getGoodsListQuery="user/{user_id}/goods";
+    public static final String getGoodsListSearchQuery="user/{user_id}/goods";
     //在售商品列表查询
     public static final String getGoodsSaleListQuery="user/{user_id}/goods_sale";
     //在售商品详情查询
@@ -53,18 +53,19 @@ public class NetApi {
      * **************采购计划 接口**************************
      */
     //采购单查询
-    public static final String getPurchaseOrderQuery="user/{user_id}/Collaborator/{collaborator_id}/purchase_order";
+    public static final String getPurchaseOrderQuery="user/{user_id}/collaborator/{collaborator_id}/purchase_order";
     //⽤户采购单下单时调⽤
     public static final String getPurchaseOrderaAdd="user/{user_id}/collaborator/{collaborator_id}/purchase_order";
     //采购单修改
-    public static final String getPurchaseOrderModify="user/{user_id}/Collaborator/{collaborator_id}/purchase_order/\n" +
+    public static final String getPurchaseOrderModify="user/{user_id}/collaborator/{collaborator_id}/purchase_order/\n" +
             "{purchase_order_id}";
-    // ⽤户采购单确认收货时
-    public static final String getPurchaseOrderConfirmReceipt="user/{user_id}/Collaborator/{collaborator_id}/purchase_order/{purchase_order_id}";
+    // 采购单商品缺货登记
+    public static final String getPurchaseOrderLackModify="/user/{user_id}/collaborator/{collaborator_id}/purchase_order/\n" +
+            "{purchase_order_id}/purchase_goods/{purchase_goods_id}";
     //添加采购收藏
     public static final String getPurchaseTemplateAdd="user/{user_id}/collaborator/{collaborator_id}/purchase_template";
     //采购收藏列表查询
-    public static final String getPurchaseTemplateQuery="user/{user_id}/Collaborator/{collaborator_id}/purchase_template";
+    public static final String getPurchaseTemplateQuery="user/{user_id}/collaborator/{collaborator_id}/purchase_template";
 
 
 

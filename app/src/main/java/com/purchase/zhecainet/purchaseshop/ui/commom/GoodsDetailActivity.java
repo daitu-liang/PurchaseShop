@@ -17,17 +17,28 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.purchase.zhecainet.purchaseshop.R;
+import com.purchase.zhecainet.purchaseshop.api.menucollection.MenuApi;
+import com.purchase.zhecainet.purchaseshop.api.pickgoods.PickGoodsApi;
 import com.purchase.zhecainet.purchaseshop.base.BaseActivity;
+import com.purchase.zhecainet.purchaseshop.model.BaseInfo;
 import com.purchase.zhecainet.purchaseshop.model.GoodsSaleDetailInfo;
-import com.purchase.zhecainet.purchaseshop.ui.purchaseplan.ConfirmReceiptActivity;
+import com.purchase.zhecainet.purchaseshop.model.PurchaseOrderInfo;
+import com.purchase.zhecainet.purchaseshop.net.ApiSubscriber;
+import com.purchase.zhecainet.purchaseshop.net.HttpTransformer;
+import com.purchase.zhecainet.purchaseshop.net.RetrofitClient;
+import com.purchase.zhecainet.purchaseshop.utils.HeadUtils;
 import com.purchase.zhecainet.purchaseshop.utils.Logger;
+import com.purchase.zhecainet.purchaseshop.utils.UserUtil;
 import com.purchase.zhecainet.purchaseshop.widget.RatingBarView;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,8 +50,7 @@ public class GoodsDetailActivity extends BaseActivity {
     private Logger log = Logger.getLogger(TAG);
     @BindView(R.id.goods_image)
     SimpleDraweeView goodsImage;
-    @BindView(R.id.indicator_ratingbar)
-    RatingBar indicatorRatingbar;
+
     @BindView(R.id.rb)
     RatingBarView ratingBarView;
     @BindView(R.id.goods_name_tv)
@@ -61,6 +71,7 @@ public class GoodsDetailActivity extends BaseActivity {
     TextView tipTv;
     @BindView(R.id.add_purchase_button)
     RelativeLayout addPurchaseButton;
+    private String goods_sale_id;
 
     public static Intent getIntent(Context context, String goods_sale_id) {
         Intent intent = new Intent(context, GoodsDetailActivity.class);
@@ -81,13 +92,30 @@ public class GoodsDetailActivity extends BaseActivity {
         setVisableActionBackBtn(true);
         setVisableActionBarOperate(false);
         setActionBarTitle(getString(R.string.title_goods_detail));
-        String goods_sale_id = getIntent().getStringExtra("goods_sale_id_key");
-        getGoodsData(goods_sale_id);
-        initGoodsData(null);
+        goods_sale_id = getIntent().getStringExtra("goods_sale_id_key");
+        getGoodsDetailData(goods_sale_id);
+        initGoodsDetailData(null);
     }
 
-    private void initGoodsData(GoodsSaleDetailInfo detailInfos) {
-        GoodsSaleDetailInfo detailInfo=new GoodsSaleDetailInfo();
+    @OnClick({R.id.add_collection_btn, R.id.add_purchase_button})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.add_collection_btn:
+                doCollection();
+                break;
+            case R.id.add_purchase_button:
+                addPurchaseGoods();
+                break;
+        }
+    }
+
+    /**
+     * 初始化商品详情
+     *
+     * @param detailInfos
+     */
+    private void initGoodsDetailData(GoodsSaleDetailInfo detailInfos) {
+        GoodsSaleDetailInfo detailInfo = new GoodsSaleDetailInfo();
         detailInfo.setPhoto("http://t.img.i.hsuperior.com/80a388ed-93f5-44a0-8aa7-e65f0f8809f2");
         detailInfo.setName("意大利牛逼");
         detailInfo.setPoint(3.5f);
@@ -116,37 +144,78 @@ public class GoodsDetailActivity extends BaseActivity {
     }
 
 
-    private void getGoodsData(String goods_sale_id) {
+    /**
+     * 商品详情
+     *
+     * @param goods_sale_id
+     */
+    private void getGoodsDetailData(String goods_sale_id) {
         if (TextUtils.isEmpty(goods_sale_id)) return;
+        String userId = UserUtil.getUid();
+        if (TextUtils.isEmpty(userId)) return;
+        Map<String, String> paramsmap = new LinkedHashMap<>();
+
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
+        RetrofitClient.getInstance()
+                .builder(PickGoodsApi.class)
+                .getGoodsSaleDetailQuery(headVaule, userId, goods_sale_id)
+                .compose(HttpTransformer.<GoodsSaleDetailInfo>toTransformer())
+                .subscribe(new ApiSubscriber<GoodsSaleDetailInfo>() {
+                    @Override
+                    protected void onSuccess(GoodsSaleDetailInfo bean) {
+                        initGoodsDetailData(bean);
+                    }
+                });
     }
 
-    @OnClick({R.id.add_collection_btn, R.id.add_purchase_button})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.add_collection_btn:
-                doCollection();
-                break;
-            case R.id.add_purchase_button:
-                addPurchaseGoods();
-                break;
-        }
-    }
 
     /**
      * 添加收藏
      */
     private void doCollection() {
-        //goods_sale_id
 
-        showToast("添加收藏");
+        String userId = UserUtil.getUid();
+        if (TextUtils.isEmpty(userId)) return;
+        String collaborator_id = UserUtil.userInfo.getDepartmnetId();
+        if (TextUtils.isEmpty(collaborator_id)) return;
+        Map<String, String> paramsmap = new HashMap<>();
+        paramsmap.put("goods_sale_id", goods_sale_id);
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
+        RetrofitClient.getInstance()
+                .builder(MenuApi.class)
+                .getPurchaseTemplateAdd(headVaule, userId, collaborator_id)
+                .compose(HttpTransformer.<BaseInfo>toTransformer())
+                .subscribe(new ApiSubscriber<BaseInfo>() {
+                    @Override
+                    protected void onSuccess(BaseInfo bean) {
+                        showToast(getString(R.string.tip_collection_success));
+                    }
+                });
     }
 
     /**
      * 添加采购物
      */
     private void addPurchaseGoods() {
-        showToast("加入采购");
-        startActivity(ConfirmReceiptActivity.getIntent(this,"aa","bb"));
+
+        String userId = UserUtil.getUid();
+        if (TextUtils.isEmpty(userId)) return;
+        String collaborator_id = UserUtil.userInfo.getDepartmnetId();
+        if (TextUtils.isEmpty(collaborator_id)) return;
+        Map<String, String> paramsmap = new HashMap<>();
+        paramsmap.put("goods_sale_id", goods_sale_id);
+        paramsmap.put("number", "1");
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
+        RetrofitClient.getInstance()
+                .builder(PickGoodsApi.class)
+                .getPurchaseOrderaAdd(headVaule, userId, collaborator_id)
+                .compose(HttpTransformer.<PurchaseOrderInfo>toTransformer())
+                .subscribe(new ApiSubscriber<PurchaseOrderInfo>() {
+                    @Override
+                    protected void onSuccess(PurchaseOrderInfo bean) {
+                        showToast(getString(R.string.tip_add_goods_success));
+                    }
+                });
     }
 
     private void initSetting() {

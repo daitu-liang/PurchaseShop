@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.purchase.zhecainet.purchaseshop.app.PurchaseApplication;
 import com.purchase.zhecainet.purchaseshop.config.Constant;
-import com.purchase.zhecainet.purchaseshop.model.LoginResponseBean;
+import com.purchase.zhecainet.purchaseshop.model.LoginUserInfo;
 import com.purchase.zhecainet.purchaseshop.model.UserInfo;
 
 /**
@@ -58,16 +58,15 @@ public class UserUtil {
 	 * 
 	 * @param data
 	 */
-	public static void dealLoginResponse(LoginResponseBean data) {
+	public static void dealLoginResponse(LoginUserInfo data) {
 
 		try {
 
 				if(userInfo==null){
 					userInfo=new UserInfo();
 				}
-			UserUtil.userInfo.setUser_id(data.getU_guid());
-
-
+			UserUtil.userInfo.setUser_id(data.getId());
+			UserUtil.userInfo.setToken(data.getToken());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

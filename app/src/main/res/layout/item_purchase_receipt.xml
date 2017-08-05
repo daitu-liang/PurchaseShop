@@ -42,7 +42,8 @@
             android:singleLine="true"
             android:text="牛肉"
             android:textColor="@color/text_dark"
-            android:textSize="@dimen/text_size_16sp" />
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/goods_num_weight_tv"
@@ -77,18 +78,19 @@
             app:atg_backgroundColor="@color/select_tag2"
             app:atg_borderColor="@color/transparent"
             app:atg_textColor="@color/milk_white"
+            app:atg_textSize="@dimen/text_size_10sp"
+            app:atg_horizontalPadding="@dimen/tag_horizontal_margin"
             />
-
         <TextView
             android:id="@+id/goods_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/indicator_ratingbar"
+            android:layout_below="@+id/rb"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:text="￥ 308.00"
             android:textColor="@color/text_dark"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
 
         <TextView

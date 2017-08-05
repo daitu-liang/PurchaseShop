@@ -49,17 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical">
 
-            <RatingBar
-                android:id="@+id/indicator_ratingbar"
-                style="?android:attr/ratingBarStyleIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:numStars="5"
-                android:rating="2.5"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:visibility="gone"/>
+
             <com.purchase.zhecainet.purchaseshop.widget.RatingBarView
                 android:id="@+id/rb"
                 android:layout_width="wrap_content"
@@ -72,7 +62,6 @@
                 app:starPadding="3dp"
                 app:starStep="1.5"
                 app:stepSize="Half"
-
                 android:layout_marginTop="5dp"/>
 
             <TextView
@@ -85,7 +74,8 @@
                 android:singleLine="true"
                 android:text="牛肉"
                 android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_16sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/goods_num_weight_tv"
@@ -119,18 +109,20 @@
                 app:atg_borderColor="@color/transparent"
                 app:atg_backgroundColor="@color/select_tag2"
                 android:focusable="false"
+                app:atg_textSize="@dimen/text_size_10sp"
+                app:atg_horizontalPadding="@dimen/tag_horizontal_margin"
                 />
 
             <TextView
                 android:id="@+id/goods_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/rb"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/indicator_ratingbar"
                 android:layout_marginRight="15dp"
                 android:text="￥ 308.00"
                 android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_18sp" />
+                android:textSize="@dimen/text_size_16sp" />
 
 
             <ImageButton

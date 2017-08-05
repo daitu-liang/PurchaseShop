@@ -10,15 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.purchase.zhecainet.purchaseshop.R;
 import com.purchase.zhecainet.purchaseshop.model.GoodsSaleListInfo;
+import com.purchase.zhecainet.purchaseshop.model.SupplierContent;
+import com.purchase.zhecainet.purchaseshop.widget.RatingBarView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.gujun.android.taggroup.TagGroup;
 
 import static com.purchase.zhecainet.purchaseshop.R.id.goods_image;
 
@@ -31,6 +35,7 @@ public class GoodsAdpater extends RecyclerView.Adapter<GoodsAdpater.ViewHolder> 
     private static final int TYPE_TYPE6 = 1;
     private static final int TYPE_TYPE2 = 2;
     private static final int TYPE_TYPE3 = 3;
+
 
     private Context context;
     private List<GoodsSaleListInfo> list;
@@ -61,10 +66,31 @@ public class GoodsAdpater extends RecyclerView.Adapter<GoodsAdpater.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        String url = list.get(position).getPhoto();
+        GoodsSaleListInfo saleListInfo = list.get(position);
+        String url = saleListInfo.getPhoto();
         if (!TextUtils.isEmpty(url)) {
             Uri uri = Uri.parse(url);
             holder.goodsImage.setImageURI(uri);
+        }
+
+        holder.ratingBarView.setClickable(false);//设置可否点击
+        holder.ratingBarView.setStar(saleListInfo.getPoint());//设置显示的星星个数
+        holder.goodsNameTv.setText(saleListInfo.getName());
+        holder.goodsNumWeightTv.setText(saleListInfo.getWeight() + "/KG");
+        holder.goodsDescTv.setText("来自上海滩");
+        holder.goodsPrice.setText( "￥ " + saleListInfo.getPrice());
+
+        SupplierContent supplierInfo = saleListInfo.getSupplier_content();
+        if (supplierInfo != null) {
+            holder.goodsDescTv.setText( supplierInfo.getProducer());
+            String tagStr = supplierInfo.getTags();
+            String[] tagArr = tagStr.split(",");
+            if (tagArr.length > 0) {
+                holder.goodsTagGroup.setTags(tagArr);
+            } else {
+                holder.goodsTagGroup.setVisibility(View.GONE);
+            }
+
         }
 
         holder.addPurchase.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +172,18 @@ public class GoodsAdpater extends RecyclerView.Adapter<GoodsAdpater.ViewHolder> 
         SimpleDraweeView goodsImage;
         @BindView(R.id.add_purchase)
         ImageButton addPurchase;
+        @BindView(R.id.rb)
+        RatingBarView ratingBarView;
+        @BindView(R.id.goods_name_tv)
+        TextView goodsNameTv;
+        @BindView(R.id.goods_num_weight_tv)
+        TextView goodsNumWeightTv;
+        @BindView(R.id.goods_desc_tv)
+        TextView goodsDescTv;
+        @BindView(R.id.goods_tag_group)
+        TagGroup goodsTagGroup;
+        @BindView(R.id.goods_price)
+        TextView goodsPrice;
 
         public ViewHolder(View itemView) {
             super(itemView);

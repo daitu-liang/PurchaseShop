@@ -44,7 +44,7 @@ public interface CommonApi {
      */
     @FormUrlEncoded
     @POST(NetApi.getBasicPush)
-    Observable<HttpResult<PushInfo>> getBasicPush(@FieldMap() Map<String, String> map);
+    Observable<HttpResult<PushInfo>> getBasicPush(@Header("Authorization") String authorization,@FieldMap() Map<String, String> map);
 
     /**
      * 短信发送
@@ -61,15 +61,15 @@ public interface CommonApi {
      */
     @FormUrlEncoded
     @POST(NetApi.getUserLogin)
-    Observable<HttpResult<LoginUserInfo>> getUserLogin(@FieldMap() Map<String, String> map);
+    Observable<HttpResult<LoginUserInfo>> getUserLogin(@Header("Authorization") String authorization,@FieldMap() Map<String, String> map);
 
     /**
      * ⽤户信息初始化
      * @param user_id
      * @return
      */
-    @GET(NetApi.getUserInfoInit+"{user_id}+/init")
-    Observable<HttpResult<UserInitInfo>> getUserInfoInit(@Path("user_id") String user_id);
+    @GET(NetApi.getUserInfoInit)
+    Observable<HttpResult<UserInitInfo>> getUserInfoInit(@Header("Authorization") String authorization,@Path("user_id") String user_id);
 
     /**
      * 退出登录
@@ -81,5 +81,5 @@ public interface CommonApi {
 
     @FormUrlEncoded
     @POST(NetApi.getUpdateUserPassword)
-    Observable<HttpResult<BaseInfo>> getUpdateUserPassword(@FieldMap() Map<String, String> map);
+    Observable<HttpResult<BaseInfo>> getUpdateUserPassword(@Header("Authorization") String authorization,@FieldMap() Map<String, String> map);
 }

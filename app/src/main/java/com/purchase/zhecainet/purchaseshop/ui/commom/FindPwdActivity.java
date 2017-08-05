@@ -16,9 +16,16 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.purchase.zhecainet.purchaseshop.R;
+import com.purchase.zhecainet.purchaseshop.api.common.CommonApi;
 import com.purchase.zhecainet.purchaseshop.base.BaseActivity;
+import com.purchase.zhecainet.purchaseshop.model.BaseInfo;
+import com.purchase.zhecainet.purchaseshop.model.SmsInfo;
+import com.purchase.zhecainet.purchaseshop.net.ApiSubscriber;
+import com.purchase.zhecainet.purchaseshop.net.HttpTransformer;
+import com.purchase.zhecainet.purchaseshop.net.RetrofitClient;
 import com.purchase.zhecainet.purchaseshop.utils.CommonUtils;
 import com.purchase.zhecainet.purchaseshop.utils.EditUtil;
+import com.purchase.zhecainet.purchaseshop.utils.HeadUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,10 +35,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FindPwdActivity extends BaseActivity {
+    private String tranId;
+
     public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, FindPwdActivity.class);
         return intent;
     }
+
     @BindView(R.id.find_phone_et)
     EditText findPhoneEt;
     @BindView(R.id.find_pwd_et)
@@ -124,13 +134,32 @@ public class FindPwdActivity extends BaseActivity {
         getVerifyCode(telePhoneNum);
     }
 
+    /**
+     * 发送验证码
+     * @param telePhoneNum
+     */
     private void getVerifyCode(String telePhoneNum) {
-
-        isCodeCDTime = false;
-        caculateWaitTime();
-
+        Map<String, String> paramsmap = new LinkedHashMap<>();
+        paramsmap.put("phone", "1.0.0");
+        paramsmap.put("type", "1");//1:找回密码验证码
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
+        RetrofitClient.getInstance()
+                .builder(CommonApi.class)
+                .getBasicSms(headVaule, paramsmap)
+                .compose(HttpTransformer.<SmsInfo>toTransformer())
+                .subscribe(new ApiSubscriber<SmsInfo>() {
+                    @Override
+                    protected void onSuccess(SmsInfo bean) {
+                        isCodeCDTime = false;
+                        caculateWaitTime();
+                        tranId=bean.getTran_id();
+                    }
+                });
     }
 
+    /**
+     * 找回密码
+     */
     private void subimt() {
         String telePhoneVaule = EditUtil.getDataBtEdit(findPhoneEt);
         String findPwdEtVaule = EditUtil.getDataBtEdit(findPwdEt);
@@ -158,13 +187,24 @@ public class FindPwdActivity extends BaseActivity {
         }
 
         Map<String, String> paramsmap = new LinkedHashMap<>();
-        paramsmap.put("account",telePhoneVaule);
-        paramsmap.put("password",findPwdEtVaule);
-        paramsmap.put("verify_code",registCodeEtVaule);
-        paramsmap.put("tran_id ","tran_id");
-        showToast(paramsmap.toString());
+        paramsmap.put("account", telePhoneVaule);
+        paramsmap.put("password", findPwdEtVaule);
+        paramsmap.put("verify_code", registCodeEtVaule);
+        paramsmap.put("tran_id ", tranId);
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
+        RetrofitClient.getInstance()
+                .builder(CommonApi.class)
+                .getUpdateUserPassword(headVaule,paramsmap)
+                .compose(HttpTransformer.<BaseInfo>toTransformer())
+                .subscribe(new ApiSubscriber<BaseInfo>() {
+                    @Override
+                    protected void onSuccess(BaseInfo bean) {
+                        startActivity(LoginActivity.getIntent(FindPwdActivity.this));
+                    }
+                });
 
     }
+
     private void caculateWaitTime() {
         new Thread() {
 
@@ -191,6 +231,7 @@ public class FindPwdActivity extends BaseActivity {
             }
         }.start();
     }
+
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 5;

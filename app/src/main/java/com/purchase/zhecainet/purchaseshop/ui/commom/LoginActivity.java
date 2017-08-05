@@ -14,9 +14,20 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.purchase.zhecainet.purchaseshop.R;
+import com.purchase.zhecainet.purchaseshop.api.common.CommonApi;
 import com.purchase.zhecainet.purchaseshop.base.BaseActivity;
+import com.purchase.zhecainet.purchaseshop.model.LoginUserInfo;
+import com.purchase.zhecainet.purchaseshop.model.UserInitInfo;
+import com.purchase.zhecainet.purchaseshop.net.ApiSubscriber;
+import com.purchase.zhecainet.purchaseshop.net.HttpTransformer;
+import com.purchase.zhecainet.purchaseshop.net.RetrofitClient;
 import com.purchase.zhecainet.purchaseshop.ui.MainHomeActivity;
 import com.purchase.zhecainet.purchaseshop.utils.EditUtil;
+import com.purchase.zhecainet.purchaseshop.utils.HeadUtils;
+import com.purchase.zhecainet.purchaseshop.utils.UserUtil;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 /**
@@ -105,9 +116,58 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    /**
+     * 用户登录
+     *
+     * @param phone
+     * @param password
+     */
     private void doRequestLoginApi(String phone, String password) {
+        Map<String, String> paramsmap = new LinkedHashMap<>();
+        paramsmap.put("account", phone);
+        paramsmap.put("password", password);
+//        paramsmap.put("lng", "");//经度
+//        paramsmap.put("lat", "");//纬度
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
 
+        RetrofitClient.getInstance()
+                .builder(CommonApi.class)
+                .getUserLogin(headVaule, paramsmap)
+                .compose(HttpTransformer.<LoginUserInfo>toTransformer())
+                .subscribe(new ApiSubscriber<LoginUserInfo>() {
+                    @Override
+                    protected void onSuccess(LoginUserInfo bean) {
+                        UserUtil.dealLoginResponse(bean);
+                        getUserInitData();
+                    }
+                });
+    }
 
+    /**
+     * 获取用户初始化信息
+     */
+    private void getUserInitData() {
+        Map<String, String> paramsmap = new LinkedHashMap<>();
+//        paramsmap.put("account", phone);
+        String headVaule = HeadUtils.getAuthorization(paramsmap.toString());
+       String userId=UserUtil.getUid();
+        if(TextUtils.isEmpty(userId))return;
+        RetrofitClient.getInstance()
+                .builder(CommonApi.class)
+                .getUserInfoInit(headVaule,userId)
+                .compose(HttpTransformer.<UserInitInfo>toTransformer())
+                .subscribe(new ApiSubscriber<UserInitInfo>() {
+                    @Override
+                    protected void onSuccess(UserInitInfo bean) {
+                        UserUtil.userInfo.setName(bean.getName());
+                        UserUtil.userInfo.setCode(bean.getCode());
+                        UserUtil.userInfo.setPhone(bean.getPhone());
+                        if(bean.getCollaborator()!=null){
+                            UserUtil.userInfo.setDepartmnetId(bean.getCollaborator().getId());
+                            UserUtil.userInfo.setDepartmnetName(bean.getCollaborator().getName());
+                        }
+                    }
+                });
     }
 
     private boolean isPasswordValid(String password) {

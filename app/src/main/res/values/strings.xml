@@ -41,6 +41,11 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="search_tip">请输入你要采购的食品名称</string>
     <string name="confirm_receipt">确认收货</string>
+    <string name="get_goods">去收货</string>
     <string name="no_goods_num">缺货数量</string>
+    <string name="add_goods">补货</string>
+    <string name="day_purchase">日常采购</string>
 
+    <string name="tip_collection_success">收藏成功</string>
+    <string name="tip_add_goods_success">采购成功</string>
 </resources>

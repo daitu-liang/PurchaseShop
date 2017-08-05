@@ -14,7 +14,24 @@ public class UserInfo implements Serializable {
     private String name;
     private String phone;
 
-    private Collaborator collaborator;
+    private String departmnetId;
+    private String departmnetName;
+
+    public String getDepartmnetId() {
+        return departmnetId;
+    }
+
+    public void setDepartmnetId(String departmnetId) {
+        this.departmnetId = departmnetId;
+    }
+
+    public String getDepartmnetName() {
+        return departmnetName;
+    }
+
+    public void setDepartmnetName(String departmnetName) {
+        this.departmnetName = departmnetName;
+    }
 
     public String getUser_id() {
         return user_id;
@@ -56,11 +73,5 @@ public class UserInfo implements Serializable {
         this.phone = phone;
     }
 
-    public Collaborator getCollaborator() {
-        return collaborator;
-    }
 
-    public void setCollaborator(Collaborator collaborator) {
-        this.collaborator = collaborator;
-    }
 }

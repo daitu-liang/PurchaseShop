@@ -47,8 +47,8 @@ public class GoodsFragmentPagerAdapter extends FragmentPagerAdapter {
             }
 
             Bundle bundle = new Bundle();
-            bundle.putSerializable("category_url", typeInfo.getIcon());
-            bundle.putSerializable("category_name", typeInfo.getName());
+            bundle.putSerializable("category_id_key", typeInfo.getId());
+            bundle.putSerializable("category_name_key", typeInfo.getName());
             fg.setArguments(bundle);
             return fg;
         }

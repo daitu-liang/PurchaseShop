@@ -17,6 +17,7 @@ public class GoodsItem implements Serializable {
     private  String specifications;
     private  String price;
     private  String total_cost;
+    private  String lack_number;
 
     public String getId() {
         return id;
@@ -98,5 +99,5 @@ public class GoodsItem implements Serializable {
         this.lack_number = lack_number;
     }
 
-    private  String lack_number;
+
 }

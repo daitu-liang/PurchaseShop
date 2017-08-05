@@ -12,10 +12,13 @@
     <dimen name="one_dp">1dp</dimen>
 
     <dimen name="pic_goods_with">120dp</dimen>
+
     <dimen name="pic_goods_high">90dp</dimen>
 
     <dimen name="btn_margin_bottom_high">20dp</dimen>
     <dimen name="dialog_btn_with">180dp</dimen>
+
+    <dimen name="tag_horizontal_margin">4dp</dimen>
 
     <dimen name="text_size_8sp">8sp</dimen>
     <dimen name="text_size_10sp">10sp</dimen>

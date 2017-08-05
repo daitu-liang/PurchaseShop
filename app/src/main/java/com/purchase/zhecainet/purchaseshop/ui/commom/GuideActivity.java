@@ -9,7 +9,7 @@ import com.purchase.zhecainet.purchaseshop.R;
 
 public class GuideActivity extends AppCompatActivity {
     public static Intent getIntent(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(context, GuideActivity.class);
         return intent;
     }
     @Override
