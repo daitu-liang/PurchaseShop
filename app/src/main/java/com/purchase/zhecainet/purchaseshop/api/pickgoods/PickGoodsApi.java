@@ -6,6 +6,7 @@ import com.purchase.zhecainet.purchaseshop.model.GoodsQuerySearchListInfo;
 import com.purchase.zhecainet.purchaseshop.model.GoodsSaleDetailInfo;
 import com.purchase.zhecainet.purchaseshop.model.GoodsSaleListInfo;
 import com.purchase.zhecainet.purchaseshop.model.PurchaseOrderInfo;
+import com.purchase.zhecainet.purchaseshop.model.RecommendListInfo;
 import com.purchase.zhecainet.purchaseshop.net.HttpResult;
 
 import java.util.List;
@@ -72,6 +73,15 @@ public interface PickGoodsApi {
      */
     @GET(NetApi.getGoodsSaleDetailQuery)
     Observable<HttpResult<GoodsSaleDetailInfo>> getGoodsSaleDetailQuery(@Header("Authorization") String authorization, @Path("user_id") String user_id, @Path("goods_sale_id") String goods_sale_id);
+
+    /**
+     * 推荐位查询
+     * @param authorization
+     * @param params
+     * @return
+     */
+    @GET(NetApi.getRecommendListQuery)
+    Observable<HttpResult<List<RecommendListInfo>>> getRecommendListQuery(@Header("Authorization") String authorization, @QueryMap Map<String, String> params);
 
 
 }

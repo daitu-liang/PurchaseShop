@@ -47,6 +47,8 @@ public class NetApi {
     public static final String getGoodsSaleListQuery="user/{user_id}/goods_sale";
     //在售商品详情查询
     public static final String getGoodsSaleDetailQuery="user/{user_id}/goods_sale/{goods_sale_id}";
+    //推荐位查询
+    public static final String getRecommendListQuery="recommend";
 
 
     /**
@@ -60,19 +62,18 @@ public class NetApi {
     public static final String getPurchaseOrderModify="user/{user_id}/collaborator/{collaborator_id}/purchase_order/\n" +
             "{purchase_order_id}";
     // 采购单商品缺货登记
-    public static final String getPurchaseOrderLackModify="/user/{user_id}/collaborator/{collaborator_id}/purchase_order/\n" +
+    public static final String getPurchaseOrderLackModify="user/{user_id}/collaborator/{collaborator_id}/purchase_order/\n" +
             "{purchase_order_id}/purchase_goods/{purchase_goods_id}";
-    //添加采购收藏
-    public static final String getPurchaseTemplateAdd="user/{user_id}/collaborator/{collaborator_id}/purchase_template";
-    //采购收藏列表查询
-    public static final String getPurchaseTemplateQuery="user/{user_id}/collaborator/{collaborator_id}/purchase_template";
+
 
 
 
     /**
      * **************菜单收藏接口**************************
      */
-    //推荐位查询
-    public static final String getRecommendListQuery="recommend";
 
+    //添加采购收藏
+    public static final String getPurchaseTemplateAdd="user/{user_id}/collaborator/{collaborator_id}/purchase_template";
+    //采购收藏列表查询
+    public static final String getPurchaseTemplateQuery="user/{user_id}/collaborator/{collaborator_id}/purchase_template";
 }
