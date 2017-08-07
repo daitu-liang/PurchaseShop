@@ -19,12 +19,13 @@
         fresco:actualImageScaleType="centerCrop"
         fresco:fadeDuration="300"
         fresco:failureImage="@drawable/ic_fail_pic"
-        fresco:failureImageScaleType="centerInside"
-        fresco:placeholderImageScaleType="fitCenter"
+        fresco:failureImageScaleType="centerCrop"
+        fresco:placeholderImageScaleType="centerCrop"
         fresco:progressBarImage="@drawable/ic_image_loading"
-        fresco:progressBarImageScaleType="centerInside"
+        fresco:progressBarImageScaleType="centerCrop"
         fresco:retryImageScaleType="centerCrop"
-        fresco:roundWithOverlayColor="@null" />
+        fresco:roundWithOverlayColor="@null"
+      />
 
 
     <RelativeLayout
@@ -76,6 +77,7 @@
             android:focusable="false"
             android:visibility="gone"
             app:atg_backgroundColor="@color/select_tag2"
+            app:atg_checkedBackgroundColor="@color/select_tag2"
             app:atg_borderColor="@color/transparent"
             app:atg_textColor="@color/milk_white"
             app:atg_textSize="@dimen/text_size_10sp"

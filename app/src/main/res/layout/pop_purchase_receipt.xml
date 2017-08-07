@@ -23,12 +23,13 @@
             fresco:actualImageScaleType="centerCrop"
             fresco:fadeDuration="300"
             fresco:failureImage="@drawable/ic_fail_pic"
-            fresco:failureImageScaleType="centerInside"
-            fresco:placeholderImageScaleType="fitCenter"
+            fresco:failureImageScaleType="centerCrop"
+            fresco:placeholderImageScaleType="centerCrop"
             fresco:progressBarImage="@drawable/ic_image_loading"
-            fresco:progressBarImageScaleType="centerInside"
+            fresco:progressBarImageScaleType="centerCrop"
             fresco:retryImageScaleType="centerCrop"
-            fresco:roundWithOverlayColor="@null" />
+            fresco:roundWithOverlayColor="@null"
+          />
 
         <RelativeLayout
             android:layout_width="match_parent"

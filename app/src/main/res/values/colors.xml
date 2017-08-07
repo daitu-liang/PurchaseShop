@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#2b2d2d</color>
-    <color name="colorPrimaryDark">#f2f3f7</color>
+    <color name="colorPrimaryDark">#dcdde1</color>
     <color name="colorAccent">#91c686</color>
 
     <color name="transparent">#00000000</color>
@@ -26,6 +26,8 @@
     <color name="btn_green_bg">#0a854c</color>
     <color name="selectdeparment">#599cd5</color>
 
+    <color name="start_green">#90c785</color>
+    <color name="start_grey">#b1b1b1</color>
     <color name="select_tag1">#91c686</color>
     <color name="select_tag2">#e8a081</color>
     <color name="tip_bg_red">#fb958e</color>

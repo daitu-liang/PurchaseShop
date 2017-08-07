@@ -33,11 +33,12 @@
                     fresco:actualImageScaleType="centerCrop"
                     fresco:fadeDuration="300"
                     fresco:failureImage="@drawable/ic_fail_pic"
-                    fresco:failureImageScaleType="centerInside"
-                    fresco:placeholderImageScaleType="fitCenter"
+                    fresco:failureImageScaleType="fitCenter"
+                    fresco:placeholderImageScaleType="centerCrop"
                     fresco:progressBarImage="@drawable/ic_image_loading"
-                    fresco:progressBarImageScaleType="centerInside"
-                    fresco:retryImageScaleType="centerCrop" />
+                    fresco:progressBarImageScaleType="centerCrop"
+                    fresco:retryImageScaleType="centerCrop"
+                  />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -46,16 +47,15 @@
                     android:background="@color/white"
                     android:padding="@dimen/activity_horizontal_margin">
 
-
                     <com.purchase.zhecainet.purchaseshop.widget.RatingBarView
                         android:id="@+id/rb"
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
                         android:layout_marginTop="5dp"
                         app:starCount="5"
-                        app:starEmpty="@drawable/ic_star_grey"
-                        app:starFill="@drawable/ic_star_yellow"
-                        app:starHalf="@drawable/ic_star_yellow"
+                        app:starEmpty="@drawable/ic_star_green1"
+                        app:starFill="@drawable/ic_star_yellow3"
+                        app:starHalf="@drawable/ic_star_yellow2"
                         app:starImageSize="14dp"
                         app:starPadding="3dp"
                         app:starStep="1.5"
@@ -104,9 +104,10 @@
                         android:focusable="false"
                         app:atg_backgroundColor="@color/select_tag2"
                         app:atg_borderColor="@color/transparent"
+                        app:atg_checkedBackgroundColor="@color/select_tag2"
+                        app:atg_horizontalPadding="@dimen/tag_horizontal_margin"
                         app:atg_textColor="@color/milk_white"
-                        app:atg_textSize="@dimen/text_size_10sp"
-                        app:atg_horizontalPadding="@dimen/tag_horizontal_margin"/>
+                        app:atg_textSize="@dimen/text_size_10sp" />
 
                     <TextView
                         android:id="@+id/goods_price"

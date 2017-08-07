@@ -29,12 +29,13 @@
                 fresco:actualImageScaleType="centerCrop"
                 fresco:fadeDuration="300"
                 fresco:failureImage="@drawable/ic_fail_pic"
-                fresco:failureImageScaleType="centerInside"
-                fresco:placeholderImageScaleType="fitCenter"
+                fresco:failureImageScaleType="centerCrop"
+                fresco:placeholderImageScaleType="centerCrop"
                 fresco:progressBarImage="@drawable/ic_image_loading"
-                fresco:progressBarImageScaleType="centerInside"
+                fresco:progressBarImageScaleType="centerCrop"
                 fresco:retryImageScaleType="centerCrop"
-                fresco:roundWithOverlayColor="@null" />
+                fresco:roundWithOverlayColor="@null"
+               />
 
             <ImageButton
                 android:id="@+id/add_collection_btn"
@@ -55,9 +56,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
                 app:starCount="5"
-                app:starEmpty="@drawable/ic_star_grey"
-                app:starFill="@drawable/ic_star_green"
-                app:starHalf="@drawable/ic_star_yellow"
+                app:starEmpty="@drawable/ic_star_green1"
+                app:starFill="@drawable/ic_star_green3"
+                app:starHalf="@drawable/ic_star_green2"
                 app:starImageSize="14dp"
                 app:starPadding="3dp"
                 app:starStep="1.5"
@@ -108,6 +109,7 @@
                 app:atg_textColor="@color/milk_white"
                 app:atg_borderColor="@color/transparent"
                 app:atg_backgroundColor="@color/select_tag2"
+                app:atg_checkedBackgroundColor="@color/select_tag2"
                 android:focusable="false"
                 app:atg_textSize="@dimen/text_size_10sp"
                 app:atg_horizontalPadding="@dimen/tag_horizontal_margin"
