@@ -41,15 +41,11 @@ public class LoginActivity extends BaseActivity {
 
     private AutoCompleteTextView mPoneView;
     private EditText mPasswordView;
-    private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setVisableActionBarOperate(false);
-        setVisableActionBackBtn(false);
-        setActionBarTitle(getString(R.string.login));
         mPoneView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -71,7 +67,7 @@ public class LoginActivity extends BaseActivity {
 //                attemptLogin();
             }
         });
-        mLoginFormView = findViewById(R.id.login_form);
+
         TextView mForgetPasswordButton = (TextView) findViewById(R.id.forget_password);
         mForgetPasswordButton.setOnClickListener(new OnClickListener() {
             @Override

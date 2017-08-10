@@ -3,6 +3,8 @@ package com.purchase.zhecainet.purchaseshop.ui.purchaseplan;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -79,6 +81,10 @@ public class PurchasePlanFragment extends BaseFragment {
     TextView tvPlanWeight;
     @BindView(R.id.recyclerview)
     XRecyclerView mRecyclerview;
+    @BindView(R.id.collapsingtoolbarlayout)
+    CollapsingToolbarLayout collapsingtoolbarlayout;
+    @BindView(R.id.appbarlayout)
+    AppBarLayout appbarlayout;
     private Logger log = Logger.getLogger(TAG);
     @BindView(R.id.calendarView)
     MaterialCalendarView mCalendarView;
@@ -88,7 +94,7 @@ public class PurchasePlanFragment extends BaseFragment {
     List<GoodsItem> goodsList = new ArrayList<>();
     int selectType = 1;//采购类型  日常采购1 补货2
     int selectState = 0;// 0未下单，1下单中，2派单中，3配送员待提货中，4配送中，5已送达，待收货，6已收货，待评价，7完成
-    String selectDate="";
+    String selectDate = "";
     private MultiItemTypeAdapter mAdapter;
 
     @Override
@@ -109,6 +115,7 @@ public class PurchasePlanFragment extends BaseFragment {
         initBaseView();
         initDataCanlander();
         initData(null);
+
     }
 
     private void initBaseView() {
@@ -125,6 +132,17 @@ public class PurchasePlanFragment extends BaseFragment {
 
         mRecyclerview.setAdapter(mAdapter);
 
+        appbarlayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                log.i(TAG, "verticalOffset=" + verticalOffset);
+                if (verticalOffset < -300) {
+                    tvCenterMonth.setVisibility(View.VISIBLE);
+                } else {
+                    tvCenterMonth.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
 
@@ -135,14 +153,19 @@ public class PurchasePlanFragment extends BaseFragment {
                 .setMaximumDate(CalendarDay.from(2018, 12, 12))
                 .setCalendarDisplayMode(CalendarMode.WEEKS)
                 .commit();
+        Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月");
-        String format = sdf.format(new Date());
+        String format = sdf.format(date);
         tvMonth.setText(format);
 
 
+        SimpleDateFormat sdfd = new SimpleDateFormat("yyyy年M月d日");
+        String formatday = sdfd.format(date);
+        tvCenterMonth.setText(formatday + " " + getWeek(Calendar.getInstance()));
+
         SimpleDateFormat dateStrFormat = new SimpleDateFormat("yyyyMMdd");
-        String dateStr = dateStrFormat.format(new Date());
-        selectDate=dateStr;
+        String dateStr = dateStrFormat.format(date);
+        selectDate = dateStr;
         getPurchaseGoodsListData(selectType + "", dateStr);
         mCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -152,10 +175,12 @@ public class PurchasePlanFragment extends BaseFragment {
                 log.d("", "onDateSelected-formatDate=" + formatDate);
                 String dateStr = getDateStr(date);
                 log.d("", "onDateSelected-dateStr=" + dateStr);
-                selectDate=dateStr;
+                selectDate = dateStr;
                 getPurchaseGoodsListData(selectType + "", dateStr);
                 setCurrentMonth(formatDate);
 
+                Calendar calendar = date.getCalendar();
+                tvCenterMonth.setText(formatDate + " " + getWeek(calendar));
             }
         });
 
@@ -172,7 +197,7 @@ public class PurchasePlanFragment extends BaseFragment {
     }
 
     private void initData(PurchaseOrderInfo bean1) {
-        PurchaseOrderInfo bean=new PurchaseOrderInfo();
+        PurchaseOrderInfo bean = new PurchaseOrderInfo();
         tvPlanCatogry.setText("商品种类：4/5" + bean.getTotal_goods());
         tvPlanCenterState.setText("正在下单");
         tvPlanWeight.setText("总重量：5421KG" + bean.getTotal_weight());
@@ -199,7 +224,6 @@ public class PurchasePlanFragment extends BaseFragment {
 
     private void setCurrentMonth(String date) {
         tvMonth.setText(date);
-        tvCenterMonth.setText(date);
         selectState = 1;
         confirmGetGoodsButton.setVisibility(View.GONE);
         mAdapter.notifyDataSetChanged();
@@ -234,7 +258,7 @@ public class PurchasePlanFragment extends BaseFragment {
                 break;
 
             case R.id.confirm_get_goods_button:
-                startActivity(ConfirmReceiptActivity.getIntent(getActivity(), selectType+"",selectDate));
+                startActivity(ConfirmReceiptActivity.getIntent(getActivity(), selectType + "", selectDate));
                 break;
         }
     }
@@ -480,10 +504,34 @@ public class PurchasePlanFragment extends BaseFragment {
         return goodsList;
     }
 
+    /*获取星期几*/
+    public static String getWeek(Calendar calendar) {
+        int i = calendar.get(Calendar.DAY_OF_WEEK);
+        switch (i) {
+            case 1:
+                return "星期日";
+            case 2:
+                return "星期一";
+            case 3:
+                return "星期二";
+            case 4:
+                return "星期三";
+            case 5:
+                return "星期四";
+            case 6:
+                return "星期五";
+            case 7:
+                return "星期六";
+            default:
+                return "";
+        }
+    }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
     }
 
     @Override

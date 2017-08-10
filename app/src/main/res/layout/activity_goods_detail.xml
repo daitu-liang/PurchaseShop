@@ -105,6 +105,7 @@
                         app:atg_backgroundColor="@color/select_tag2"
                         app:atg_borderColor="@color/transparent"
                         app:atg_checkedBackgroundColor="@color/select_tag2"
+                        app:atg_pressedBackgroundColor="@color/select_tag2"
                         app:atg_horizontalPadding="@dimen/tag_horizontal_margin"
                         app:atg_textColor="@color/milk_white"
                         app:atg_textSize="@dimen/text_size_10sp" />

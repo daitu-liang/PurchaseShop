@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.purchase.zhecainet.purchaseshop.app.PurchaseApplication;
 import com.purchase.zhecainet.purchaseshop.ui.MainHomeActivity;
-import com.purchase.zhecainet.purchaseshop.ui.commom.GuideActivity;
+import com.purchase.zhecainet.purchaseshop.ui.commom.LoginActivity;
 import com.purchase.zhecainet.purchaseshop.utils.Logger;
 import com.purchase.zhecainet.purchaseshop.utils.UserUtil;
 
@@ -54,7 +54,8 @@ public class SplashActivity extends AppCompatActivity {
      * 进入引导界面
      */
     private void comeWelcome() {
-        startActivity(GuideActivity.getIntent(this));
+        startActivity(LoginActivity.getIntent(SplashActivity.this));
+//        startActivity(GuideActivity.getIntent(this));
         finish();
     }
     @Override

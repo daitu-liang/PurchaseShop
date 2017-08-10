@@ -4,16 +4,10 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@color/gray_main_bg"
+    android:background="@drawable/bg_login"
     tools:context="com.purchase.zhecainet.purchaseshop.ui.commom.LoginActivity">
 
-    <include layout="@layout/title_bar_layout"></include>
 
-
-    <ScrollView
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -21,6 +15,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:paddingTop="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/login_input_horizontal_margin"
             android:paddingRight="@dimen/login_input_horizontal_margin">
 
@@ -89,5 +84,5 @@
                 android:textColor="@color/text_dark"
                 android:textSize="@dimen/text_size_14sp" />
         </LinearLayout>
-    </ScrollView>
+
 </LinearLayout>
